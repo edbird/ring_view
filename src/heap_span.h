@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HEAP_SPAN_H
+#define HEAP_SPAN_H
 
 #include <algorithm>
 #include <cassert>
@@ -187,3 +188,5 @@ private:
 };
 
 } } // namespace std::experimental
+
+#endif

@@ -25,7 +25,11 @@ int main()
     std::queue<T, RVT> q(rv);
     q.push(nullptr);
     q.push(nullptr);
-    q.front();
-    q.back();
+    {
+        const auto _ = std::move(q.front());
+    }
+    {
+        const auto _ = std::move(q.back());
+    }
     q.pop();
 }

@@ -1,6 +1,7 @@
-#pragma once
+#ifndef FIXED_RING_H
+#define FIXED_RING_H
 
-#include "ring_view.h"
+#include "ring_span.h"
 #include <array>
 #include <cstddef>
 
@@ -11,6 +12,9 @@ template<class T, std::size_t Capacity, class Container = std::array<T, Capacity
 class fixed_ring
 {
 public:
+    template<typename U>
+    using ring_span = std::experimental::ring_span<U>;
+
     using container_type = Container;
     using value_type = typename Container::value_type;
     using size_type = typename Container::size_type;
@@ -57,7 +61,7 @@ public:
     {
         ctr_ = rhs.ctr_;
         auto first_idx = (&*rhs.rv_.begin() - rhs.ctr_.begin());
-        rv_ = ring_view<T>(ctr_.begin(), ctr_.end(), ctr_.begin() + first_idx, rhs.rv_.size());
+        rv_ = ring_span<T>(ctr_.begin(), ctr_.end(), ctr_.begin() + first_idx, rhs.rv_.size());
         return *this;
     }
 
@@ -65,7 +69,7 @@ public:
     {
         auto first_idx = (&*rhs.rv_.begin() - rhs.ctr_.begin());
         ctr_ = std::move(rhs.ctr_);
-        rv_ = ring_view<T>(ctr_.begin(), ctr_.end(), ctr_.begin() + first_idx, rhs.rv_.size());
+        rv_ = ring_span<T>(ctr_.begin(), ctr_.end(), ctr_.begin() + first_idx, rhs.rv_.size());
         return *this;
     }
 
@@ -111,5 +115,7 @@ private:
     {}
 
     Container ctr_;
-    ring_view<T> rv_;
+    ring_span<T> rv_;
 };
+
+#endif

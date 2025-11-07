@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RING_SPAN_H
+#define RING_SPAN_H
 
 // Reference implementation of P0059R1 + errata.
 
@@ -271,3 +272,5 @@ private:
 } // namespace detail
 
 } } // namespace std::experimental
+
+#endif
